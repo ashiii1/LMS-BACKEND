@@ -1,6 +1,7 @@
 // src/routes/studentRoutes.js
 import { Router } from 'express';
 import Teacher from '../models/teacher.models.js';
+import Course from '../models/course.models.js'; // Import Course model
 
 const router = Router();
 
@@ -90,7 +91,7 @@ router.get('/getTeacherData/:teacherId', async (req, res) => {
   });
 
   // Route to delete a course by teacherId and courseId
-router.delete('/deleteCourse/:teacherId/:courseId', async (req, res) => {
+  router.delete('/deleteCourse/:teacherId/:courseId', async (req, res) => {
     try {
         const { teacherId, courseId } = req.params;
 
@@ -108,10 +109,8 @@ router.delete('/deleteCourse/:teacherId/:courseId', async (req, res) => {
             teacher.createdCourses.splice(courseIndex, 1); // Remove the course ID from the array
             await teacher.save();
 
-            // You may want to delete the actual course document from the Course model
-            // Uncomment the following lines if you have a Course model
-            // import Course from '../models/course.models.js';
-            // await Course.deleteOne({ _id: courseId });
+            // Delete the course document from the Course model
+            await Course.deleteOne({ _id: courseId });
 
             res.status(200).json({ message: "Course deleted successfully." });
         } else {
