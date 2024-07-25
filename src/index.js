@@ -33,6 +33,9 @@ app.use(TeacherRoute);
 import CourseRoute from './routes/CourseRoute.js'
 app.use(CourseRoute);
 
+import recordingRoutes from './routes/recordingRoutes.js';
+app.use('/api/recordings', recordingRoutes);
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err);

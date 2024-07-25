@@ -89,7 +89,17 @@ router.get('/getTeacherData/:teacherId', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
-
+// Route to get all recordings
+router.get('/getRecordings/:teacherId', async (req, res) => {
+    try {
+      const recordings = await Recording.find();
+      res.status(200).json(recordings);
+    } catch (error) {
+      console.error('Error fetching recordings:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
   // Route to delete a course by teacherId and courseId
   router.delete('/deleteCourse/:teacherId/:courseId', async (req, res) => {
     try {
